@@ -12,10 +12,10 @@ const [category, setCategory] = useState("movie");
 const [popular, setPopular] = useState([]);
 const [page, setPage] = useState(1);
 const [hasMore, sethasMore] = useState(true);
-
 const GetPopular = async () => {
   try {
     const { data } = await axios.get(`/${category}/popular?page=${page}`);
+    
     if (data.results.length > 0) {
       setPopular((prevState) => [...prevState, ...data.results]);
       setPage((prevPage) => prevPage + 1);
@@ -79,7 +79,7 @@ useEffect(() => {
           </div>
           <div className="flex ml-[25vw] md:ml-[5vw]">
            <DropDown
-            title="Popular"
+            title="Category"
             options={["Tv", "Movie", "All"]}
             func={(value) => setCategory(value.toLowerCase())}
           />
@@ -93,7 +93,7 @@ useEffect(() => {
          hasMore={hasMore}
          loader={<h4>Loading...</h4>}
       >
-      <Cards data={popular} title="popular" />
+      <Cards data={popular} title={category} />
       </InfiniteScroll>
     </div>
   ) : (
@@ -105,3 +105,5 @@ useEffect(() => {
 }
 
 export default Popular;
+
+
