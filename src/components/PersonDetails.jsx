@@ -25,18 +25,18 @@ function PersonDetails (){
   }, [dispatch, id]);
 
     return info ? (
-       <div className="px-[15%] md:py-[2%] w-full sm:h-[150vh] md:w-screen sm:flex sm:flex-col">
-              {/* navigation */}
+       <div className="px-[15%] md:py-[2%] w-full sm:h-[150vh] md:w-full sm:flex sm:flex-col">
+
           <Link
           onClick={() => navigate(-1)}
           className="text-1xl ri-arrow-left-line cursor-pointer mr-4 sm:mr-10 md:text-2xl">
           Back
         </Link>
         <div className="w-full  sm:flex">
-             {/* part 2 left poster and details*/}
-           <div className="w-full sm:w-[18vw] sm:h-[60vh] mt-5 bg-amber-500l">
+
+           <div className="w-full sm:w-[18vw] sm:h-[60vh] mt-5">
             <img
-          className="shadow-[8px_17px_38px_2px,rgba(0,0,0,.5)]  h-[30vh] object-cover mb-4 sm:mb-0"
+          className="shadow-[8px_17px_38px_2px,rgba(0,0,0,.5)]  h-[30vh] object-cover mb-4 sm:mb-0 ml-[10vw] sm:ml-[0vw]"
           src={
              info.detail?.profile_path
               ? `https://image.tmdb.org/t/p/original/${
@@ -48,8 +48,8 @@ function PersonDetails (){
         />
       <hr className="mt-5 text-zinc-200 font-bold text-2xl h-[20px] mb-3 sm:h-[10px] sm:w-[11vw]" />
       
-      {/*part 3 social media*/}
-      <div className="text-2xl text-white flex gap-x-1.5 bg-blue-700">
+
+      <div className="text-2xl text-white flex gap-x-1.5  pl-[17vw] sm:pl-0">
             <a target="_blank"
             href={`https://wikidata.org/wiki/${info.externalid.wikidata_id}`}
             rel="noopener noreferrer"
@@ -80,7 +80,7 @@ function PersonDetails (){
           </a>
           
          </div>
-     <div className="sm:py-5">
+     <div className=" pl-[18vw] sm:pl-0 sm:py-5">
       <h1 className="text-2xl text-zinc-400 font-semibold">Known for</h1>
      <h1 className="text-zinc-400">{info.detail.known_for_department}</h1>
       <h1 className="text-2xl text-zinc-400 font-semibold">Gender</h1>
@@ -94,20 +94,20 @@ function PersonDetails (){
           </div>
     
          </div>
-         {/*details and infoemation*/}
+
       <div className="w-[80%] ml-[5%]">
-     <h1 className="text-6xl text-zinc-400 font-semibold mt-5">{info.detail.name}</h1>
+     <h1 className="text-3xl sm:text-6xl text-zinc-400 font-semibold mt-5">{info.detail.name}</h1>
      <h1 className="text-2xl text-zinc-700 font-bold mt-5">Biography</h1>
-        <p className="text-zinc-400 mt-4">{info.detail.biography}</p>
+       <p className="text-zinc-400 mt-4">{info.detail.biography}</p>
         <h1 className="text-zinc-400 mt-3 text-2xl">Known for</h1>
         <div>
         <HorizontalCards data={info.combinedcredits.cast} />
         </div>
-       <div className="w-full flex justify-between mt-2">
-       <h1 className="text-zinc-400 mt-3 text-2xl">Acting</h1>
+       <div className="w-full flex items-center justify-between mt-2">
+       <h1 className="text-zinc-400 mt-1 text-2xl">Acting</h1>
          <DropDown title="Category" options={["tv","movie"]} func={(e)=> setCategory(e.target.value)} />
        </div>
-       <div className=" text-zinc-400 w-full h-[50vh] mt-4 overflow-x-hidden overflow-y-auto shadow-xl shadow-[rgba(255,255,255,0.3)] border-2 border-zinc-700 p-5">
+       <div className=" text-zinc-400 w-full md:w-full h-[50vh] mt-4 overflow-x-hidden overflow-y-auto shadow-xl shadow-[rgba(255,255,255,0.3)] border-2 border-zinc-700 p-5 bg-amber-600">
         {/*}{info[category + "credits"].cast.map((c,i)=>(
                   <li key={i} className="hover:text-white p-5 rounded hover:bg-[#19191d] duration-300 cursor-pointer">
              <Link to={`/${category}/detail/${c.id}`}>
@@ -153,3 +153,8 @@ function PersonDetails (){
 }
 
 export default PersonDetails;
+
+
+
+
+
