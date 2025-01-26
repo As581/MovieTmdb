@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+{/*import React, { useEffect } from "react";
 import { Outlet,useLocation, useParams, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { asyncloadtv, removetv } from "../store/actions/tvAction.jsx";
@@ -33,7 +33,7 @@ function TvDetails() {
       }}
       className="w-screen h-[145vh] px-[10%] relative"
     >
-      {/* Navigation Links */}
+
       <div className="nav w-full text-zinc-200 text-4xl flex items-center justify-start gap-4 p-10">
         <Link
           onClick={() => navigate(-1)}
@@ -66,7 +66,6 @@ function TvDetails() {
         )}
       </div>
 
-      {/* Movie Details Section */}
       <div className="w-full flex">
         <img
           className="shadow-[8px_17px_38px_2px,rgba(0,0,0,.5)] w-[35vw] h-[60vh] object-cover"
@@ -124,7 +123,7 @@ function TvDetails() {
         </div>
       </div>
 
-      {/* Watch Providers */}
+
       <div className="w-[80%] flex flex-col mt-5 mb-10 py-10">
         {info.watchproviders?.flatrate && (
           <div className="flex gap-x-10 items-center text-white">
@@ -186,7 +185,7 @@ function TvDetails() {
              Seasons
         </h1>
       </div>
-      {/* season */}
+
       <div className="w-full overflow-x-scroll flex flex-wrap gap-4 p-4">
   {info.detail.seasons.map((season, index) => (
     <div 
@@ -243,4 +242,183 @@ function TvDetails() {
   );
 }
 
+export default TvDetails;*/}
+
+
+import React, { useEffect } from "react";
+import { Outlet, useLocation, useParams, useNavigate, Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { asyncloadtv, removetv } from "../store/actions/tvAction.jsx";
+import HorizontalCards from "./partials/HorizontalCards";
+
+function TvDetails() {
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const { info } = useSelector((state) => state.tv);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(asyncloadtv(id));
+    return () => {
+      dispatch(removetv());
+    };
+  }, [dispatch, id]);
+
+  return info ? (
+    <div
+      style={{
+        background: `linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.5),rgba(0,0,0,.8)),url(https://image.tmdb.org/t/p/original/${
+          info.detail?.backdrop_path || "no_image"
+        })`,
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+      }}
+      className="w-full min-h-screen px-4 md:px-[4%] py-6 bg-cover bg-center relative text-white"
+    >
+      {/* Navigation Links */}
+      <div className="nav flex flex-wrap items-center justify-start gap-4 p-4 text-white text-lg md:text-2xl">
+        <Link
+          onClick={() => navigate(-1)}
+          className="text-xl md:text-2xl ri-arrow-left-line cursor-pointer"
+        >
+          Back
+        </Link>
+        {info.detail?.homepage && (
+          <a
+            target="_blank"
+            href={info.detail.homepage}
+            rel="noopener noreferrer"
+            className="text-xl"
+          >
+            <i className="ri-external-link-fill"></i>
+          </a>
+        )}
+        {info.externalid?.wikidata_id && (
+          <a
+            target="_blank"
+            href={`https://wikidata.org/wiki/${info.externalid.wikidata_id}`}
+            rel="noopener noreferrer"
+            className="text-xl"
+          >
+            <i className="ri-earth-fill"></i>
+          </a>
+        )}
+        {info.externalid?.imdb_id && (
+          <a
+            target="_blank"
+            href={`https://www.imdb.com/title/${info.externalid.imdb_id}/`}
+            rel="noopener noreferrer"
+            className="text-xl"
+          >
+            Imdb
+          </a>
+        )}
+      </div>
+
+      {/* TV Details Section */}
+      <div className="flex flex-wrap md:flex-nowrap gap-6">
+        <img
+          className="w-full md:w-[35%] lg:w-[30%] md:h-[60vh] object-cover rounded-lg shadow-lg"
+          src={
+            info.detail?.backdrop_path || info.detail?.poster_path
+              ? `https://image.tmdb.org/t/p/original/${
+                  info.detail.backdrop_path || info.detail.poster_path
+                }`
+              : "https://via.placeholder.com/150?text=No+Image"
+          }
+          alt="Profile or Backdrop"
+        />
+        <div className="content w-full md:w-[65%] lg:w-[70%] text-white">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center">
+            {info.detail?.name || info.detail?.original_title || info.detail?.title}
+            <span className="text-lg font-normal text-gray-300 ml-2">
+              ({info.detail?.first_air_date?.split("-")[0] || "N/A"})
+            </span>
+          </h1>
+          <div className="mt-4 flex flex-wrap gap-4 items-center">
+            {info.detail?.vote_average && (
+              <div className="bg-yellow-500 text-white rounded-full w-12 h-12 flex items-center justify-center text-lg font-bold shadow-md">
+                {info.detail.vote_average.toFixed(1)}
+              </div>
+            )}
+            <span className="text-lg">User Score</span>
+            <span className="text-lg">
+              {info.detail?.genres?.map((g) => g.name).join(", ") || "N/A"}
+            </span>
+            <span className="text-lg">{info.detail?.runtime || "N/A"} min</span>
+          </div>
+          <p className="text-lg italic mt-4">{info.detail?.tagline || ""}</p>  
+          <h1 className="text-3xl text-white mt-4 mb-4 font-bold">Overview</h1>
+           <p>{info.detail?.overview || "No overview available."}</p>
+          <h1 className="text-3xl text-white mt-4 mb-4 font-bold">
+            Movie Translated
+          </h1>
+          <p className="mb-[8%]">
+            {Array.isArray(info.translations)
+              ? info.translations.join(" ")
+              : "No translations available"}
+          </p>
+          <Link
+            to={`${pathname}/Trailer`}
+            className="mt-4 px-6 py-6 rounded-md bg-[#6556CD] text-xl"
+          >
+            <i className="text-xl mr-2 ri-play-fill"></i>
+            Play Trailer
+          </Link>
+
+        </div>
+      </div>
+
+      {/* Seasons */}
+      <div className="mt-8">
+        <h2 className="text-3xl text-white font-bold mb-4">Seasons</h2>
+        <div className="flex overflow-x-auto gap-6">
+          {info.detail?.seasons.map((season, index) => (
+            <div
+              key={index}
+              className="flex-shrink-0 w-[80%] md:w-[40%] lg:w-[25%] bg-gray-900 rounded-lg overflow-hidden shadow-lg"
+            >
+              <img
+                src={
+                  season.poster_path
+                    ? `https://image.tmdb.org/t/p/original/${season.poster_path}`
+                    : "https://via.placeholder.com/150?text=No+Image"
+                }
+                alt={season.name}
+                className="w-full h-[200px] object-cover"
+              />
+              <div className="p-4">
+                <h3 className="text-lg font-semibold">{season.name || "N/A"}</h3>
+                <p className="text-sm text-gray-400">
+                  Air Date: {season.air_date || "N/A"}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Recommendations */}
+      <div className="mt-12">
+        <h2 className="text-3xl text-white font-bold mb-4">Recommendations & Similar</h2>
+        <HorizontalCards
+          data={
+            info.recommendations?.length > 0
+              ? info.recommendations
+              : info.similar || []
+          }
+        />
+        <Outlet />
+      </div>
+    </div>
+  ) : (
+    <div className="w-full h-screen flex items-center justify-center text-white">
+      Loading...
+    </div>
+  );
+}
+
 export default TvDetails;
+
+

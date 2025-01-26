@@ -25,7 +25,7 @@ function PersonDetails (){
   }, [dispatch, id]);
 
     return info ? (
-       <div className="px-[15%] md:py-[2%] w-full sm:h-[150vh] md:w-full sm:flex sm:flex-col">
+       <div className="px-[15%] md:py-[2%] w-full sm:h-[150vh] md:w-full sm:flex sm:flex-col text-white">
 
           <Link
           onClick={() => navigate(-1)}

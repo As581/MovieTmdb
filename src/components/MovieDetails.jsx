@@ -448,29 +448,29 @@ function MovieDetails() {
 
 
             )}
-            <h1 className="font-semibold text-[2.8vw] sm:text-xl">User Score</h1>
+            <h1 className="font-semibold text-[2.8vw] sm:text-xl text-white">User Score</h1>
             <h1>{info.detail?.release_date || "Unknown"}</h1>
-            <h1>
+            <h1 className="text-white">
               {info.detail?.genres?.map((g, index) => g.name).join(", ") || "N/A"}
             </h1>
-            <h1>{info.detail?.runtime || "N/A"} min</h1>
+            <h1 className="text-white">{info.detail?.runtime || "N/A"} min</h1>
           </div>
           <h1 className="text-2xl text-white italic mt-5">
             {info.detail?.tagline || ""}
           </h1>
           <h1 className="text-2xl sm:text-3xl mt-3 mb-3 font-bold text-white">Overview</h1>
-          <p className="text-base sm:text-lg">{info.detail?.overview || "No overview available."}</p>
+          <p className="text-base sm:text-lg text-white">{info.detail?.overview || "No overview available."}</p>
           <h1 className="text-3xl sm:text-4xl text-white mt-4 mb-4 font-bold">
             Movie Translated
           </h1>
-          <p className="mb-[8%] text-base sm:text-lg">
+          <p className="mb-[8%] text-base sm:text-lg text-white">
             {Array.isArray(info.translations)
               ? info.translations.join(" ")
               : "No translations available"}
           </p>
           <Link
             to={`${pathname}/Trailer`}
-            className="mt-4 px-6 py-3 rounded-md bg-[#6556CD] text-lg sm:text-xl"
+            className=" text-white mt-4 px-6 py-3 rounded-md bg-[#6556CD] text-lg sm:text-xl"
           >
             <i className="text-xl mr-2 ri-play-fill"></i>
             Play Trailer
